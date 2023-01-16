@@ -9,7 +9,7 @@ const cors = require('cors')
 
 
 //Mongodb Connection
-mongoose.connect('mongodb://localhost:27017/reactTest',()=>console.log("Database connected"));
+mongoose.connect('mongodb://localhost:27017/react-node',()=>console.log("Database connected"));
 app.use(express.json())
 app.use(cors())
 app.use('/api/users',userRouter)

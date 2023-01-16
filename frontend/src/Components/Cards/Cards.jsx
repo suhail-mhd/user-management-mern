@@ -8,7 +8,6 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useEffect } from 'react';
 import axios from 'axios';
-import './card.css'
 
 function Cards() {
 

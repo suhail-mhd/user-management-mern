@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import AdminHead from '../AdminHeader/AdminHead'
+// import AdminHead from '../AdminHeader/AdminHead'
 import TableAdmin from '../AdminTable/TableAdmin'
 import {useNavigate} from 'react-router-dom'
 
@@ -20,7 +20,7 @@ function AdminHomepage() {
   },[navigate])
   return (
     <div>
-        <AdminHead/>
+        {/* <AdminHead/> */}
         <TableAdmin/>
     </div>
   )

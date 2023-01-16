@@ -5,6 +5,8 @@ import axios from 'axios';
 import Errormessage from '../Errormessage'
 import {useNavigate} from 'react-router-dom'
 import { useEffect } from 'react';
+import Validation from '../../Validation';
+
 
 function SignUp() {
 
@@ -15,6 +17,7 @@ function SignUp() {
     const [Confirmpassword , setConfirmPassword] = useState('')
     const [message,setMessage] = useState(null)
     const [error,setError] = useState(false)
+    const [errors,setErrors] = useState({})
     const navigate = useNavigate();
 
 
@@ -22,14 +25,13 @@ function SignUp() {
       const userInfo = localStorage.getItem('userInfo');
 
       if(userInfo){
-        navigate('/homepage')
+        navigate('/')
       }
     },[navigate])
 
 
     const registerUser= async(e) =>{
         e.preventDefault()
-      // console.log(name , email , number , password);
       if(password !== Confirmpassword){
         setMessage("Password Not Matching");
       }else{
@@ -47,36 +49,67 @@ function SignUp() {
           },config);
 
           localStorage.setItem("userInfo",JSON.stringify(data));
-          navigate('/homepage')
+          navigate('/')
           console.log(data);
         } catch (error) {
-          setError("Error while signup check your data")
+          setErrors(Validation(name,email,phone,password))
         }
       }
       }
 
 
   return (
-    <div className='signupBox'>
-     <form className='box'  onSubmit={registerUser}>
-      <h1>User Sign Up</h1>
-      {error && <Errormessage>{error}</Errormessage>}
-      {message && <Errormessage >{message}</Errormessage> }
-      <input type="text" onChange={(e)=>setName(e.target.value)} value={name}  placeholder="name"/>
-      <br/>
-      <input type="email"  onChange={(e)=>setEmail(e.target.value)} value={email} placeholder="Email"/>
-      <br/>
-      <input type="number"  onChange={(e)=>setPhone(e.target.value)} value={phone} placeholder="Phone"/>
-      <br/>
-      <input type="password"  onChange={(e)=>setPassword(e.target.value)} value={password} placeholder="Password"/>
-      <br/>
-      <input type="password"  onChange={(e)=>setConfirmPassword(e.target.value)} value={Confirmpassword} placeholder="Confirm Password"/>
-      <br/>
-      <input type="submit" value="Register"/>
-      <Link to='/' ><h1 className='redirectLogin' >Already have an account?</h1></Link>
-    </form>
-    
+    <>
+    <div className='signup_container'>
+    <div className='signup_form_container'>
+      <div className='right'>
+        <h1>Welcome Back</h1>
+        <Link to="/">
+          <button type="button" className='white_btn'>
+            Sign In
+          </button>
+        </Link>
+      </div>
+      <div className='left'>
+        <form className='form_container' onSubmit={registerUser}>
+          <h1 style={{color:'#333'}}>Create Account</h1>
+          {error && <Errormessage>{error}</Errormessage>}
+          {message && <Errormessage >{message}</Errormessage> }
+          <input
+            type="text"
+            placeholder="Name"
+            name="name"
+            onChange={(e)=>setName(e.target.value)} value={name}
+            className='input'
+          />
+           {errors.name && <p className="error">{errors.name}</p>}
+          <input
+            type="email"
+            placeholder="Email"
+            name="email"
+            onChange={(e)=>setEmail(e.target.value)} value={email}
+            className='input'
+          />
+           {errors.email && <p className="error">{errors.email}</p>}
+          <input type="number" name="phone"  onChange={(e)=>setPhone(e.target.value)} value={phone} placeholder="Phone" className='input'/>
+          {errors.phone && <p className="error">{errors.phone}</p>}
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            onChange={(e)=>setPassword(e.target.value)} value={password}
+            className='input'
+          />
+           {errors.password && <p className="error">{errors.password}</p>}
+          <input type="password"  onChange={(e)=>setConfirmPassword(e.target.value)} value={Confirmpassword} placeholder="Confirm Password" name="Confirmpassword" className='input'/>
+          <button type="submit" className='green_btn'>
+            Sign Up
+          </button>
+        </form>
+      </div>
     </div>
+    </div>
+    </>
   )
 }
 

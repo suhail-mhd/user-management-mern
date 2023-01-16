@@ -63,27 +63,43 @@ function AdminUpdate(id) {
     
 
   return (
-    <div className='signupBox'>
-     <form className='box'  onSubmit={registerUser}>
-      <h1>Update User</h1>
-      {error && <Errormessage>{error}</Errormessage>}
-      {message && <Errormessage >{message}</Errormessage> }
-      <input type="text" onChange={(e)=>setName(e.target.value)} value={name}  placeholder="name"/>
-      <br/>
-      <input type="email"  onChange={(e)=>setEmail(e.target.value)} value={email} placeholder="Email"/>
-      <br/>
-      <input type="number"  onChange={(e)=>setPhone(e.target.value)} value={phone} placeholder="Phone"/>
-      <br/>
-      <input type="submit" value="Update"/>   
-      <br/>
-      <Button variant="contained" color="success" onClick={backtohomepage} startIcon={<HomeSharpIcon/>}>
-        Back To Homepage
-      </Button>
-    </form>
-    
-    
-    
+    <div className='signup_container'>
+    <div className='signup_form_container'>
+      <div className='right'>
+        <h1>Update One!</h1>
+      </div>
+      <div className='left'>
+        <form className='form_container' onSubmit={registerUser}>
+          <h1 style={{color:'#333'}}>Update User</h1>
+          {error && <Errormessage>{error}</Errormessage>}
+          {message && <Errormessage >{message}</Errormessage> }
+          <input
+            type="text"
+            placeholder="Name"
+            name="name"
+            onChange={(e)=>setName(e.target.value)} value={name}
+            required
+            className='input'
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            name="email"
+            onChange={(e)=>setEmail(e.target.value)} value={email}
+            required
+            className='input'
+          />
+          <input type="number" name="phone"  onChange={(e)=>setPhone(e.target.value)} value={phone} placeholder="Phone" className='input'/>
+          <button type="submit" className='green_btn'>
+            Update
+          </button>
+          <Button variant="contained" color="info" onClick={backtohomepage} startIcon={<HomeSharpIcon/>} >Back to Homepage</Button>
+        </form>
+      </div>
     </div>
+    </div>
+
+
   )
 }
 

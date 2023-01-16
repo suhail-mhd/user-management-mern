@@ -12,16 +12,15 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <Routes>
-      
-        <Route path='/'  element={<Login/>} />
-        <Route path='/adminhomepage'  element={<AdminHomepage/>} />
-        <Route path='/admincreate'  element={<AdminCreate/>} />
-        <Route path='/adminupdate/:id' element={<AdminUpdate/>} />
-        <Route path='/admin'  element={<AdminLogin/>} />
-        <Route path='/signup'  element={<SignUp/>} />
-        <Route path='/homepage'  element={<HomePage/>} />
-      </Routes>
+        <Routes>
+          <Route path='/'  element={<Login/>} />
+          <Route path='/adminhomepage'  element={<AdminHomepage/>} />
+          <Route path='/admincreate'  element={<AdminCreate/>} />
+          <Route path='/adminupdate/:id' element={<AdminUpdate/>} />
+          <Route path='/admin'  element={<AdminLogin/>} />
+          <Route path='/signup'  element={<SignUp/>} />
+          <Route path='/homepage'  element={<HomePage/>} />
+        </Routes>
       </BrowserRouter>
     </div>
   );

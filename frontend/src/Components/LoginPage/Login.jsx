@@ -6,11 +6,14 @@ import axios from 'axios'
 import Errormessage from '../Errormessage'
 import { useEffect } from 'react'
 import {useNavigate} from 'react-router-dom'
+import Validation from '../../Validation';
+
 
 function Login() {
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
   const [error,setError] = useState('')
+  const [errors,setErrors] = useState({})
   const navigate = useNavigate();
  
 
@@ -53,7 +56,7 @@ function Login() {
         navigate('/homepage')
     } catch (error) {
       console.log(error);
-      setError("Invalid Email Or Password")
+      setErrors(Validation(email,password))
     } 
 
 
@@ -62,20 +65,45 @@ function Login() {
 
 
   return (
-    <div className='FullBox' >
-        <form className='box' onSubmit={submitHandler} >
-      <h1>User Login</h1>
 
-      {/* Error Handling */}
-      {error && <Errormessage variant="danger" >{error}</Errormessage>}
-      <input type="email" placeholder="Email" value={email}  onChange={(e)=>setEmail(e.target.value)} />
-      <br/>
-      <input type="password" placeholder="Password" value={password}  onChange={(e)=>setPassword(e.target.value)}/>
-      <br/>
-      <input type="submit" value="Login"/>
-    <Link to='/signup' ><h1 className='redirectSignup' >New user?Create a new account?</h1></Link>
+
+<div className='login_container'>
+<div className='login_form_container'>
+  <div className='left'>
+    <form className='form_container' onSubmit={submitHandler}>
+      <h1 style={{color:'#333'}}>Login to Your Account</h1>
+      <input
+        type="email"
+        placeholder="Email"
+        name="email"
+        value={email}  onChange={(e)=>setEmail(e.target.value)}
+        className='input'
+      />
+      {errors.email && <p className="error">{errors.email}</p>}
+      <input
+        type="password"
+        placeholder="Password"
+        name="password"
+        value={password}  onChange={(e)=>setPassword(e.target.value)}
+        className='input'
+      />
+      {errors.password && <p className="error">{errors.password}</p>}
+      {/* {error && <Errormessage variant="danger" className='error_msg' >{error}</Errormessage>} */}
+      <button type="submit" className='green_btn'>
+        Sign In
+      </button>
     </form>
-    </div>
+  </div>
+  <div className='right'>
+    <h1>New Here ?</h1>
+    <Link to="/signup">
+      <button type="button" className='white_btn'>
+        Sign Up
+      </button>
+    </Link>
+  </div>
+</div>
+</div>
   )
 }
 

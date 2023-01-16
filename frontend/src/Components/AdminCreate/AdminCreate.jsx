@@ -5,6 +5,8 @@ import {useNavigate} from 'react-router-dom'
 import './create.css'
 import Button from '@mui/material/Button';
 import HomeSharpIcon from '@mui/icons-material/HomeSharp';
+import Validation from '../../Validation';
+
 
 function AdminCreate() {
 
@@ -16,6 +18,8 @@ function AdminCreate() {
     const [Confirmpassword , setConfirmPassword] = useState('')
     const [message,setMessage] = useState(null)
     const [error,setError] = useState(false)
+    const [errors,setErrors] = useState({})
+
     const navigate = useNavigate();
 
     useEffect(()=>{
@@ -52,7 +56,7 @@ function AdminCreate() {
           navigate('/adminhomepage')
           console.log(data);
         } catch (error) {
-          setError("Error while signup check your data")
+          setErrors(Validation(name,email,phone,password))
         }
       }
       }
@@ -63,25 +67,51 @@ function AdminCreate() {
   
 
   return (
-    <div className='signupBox'>
-     <form className='box'  onSubmit={registerUser}>
-      <h1>Create User</h1>
-      {error && <Errormessage>{error}</Errormessage>}
-      {message && <Errormessage >{message}</Errormessage> }
-      <input type="text" onChange={(e)=>setName(e.target.value)} value={name}  placeholder="name"/>
-      <br/>
-      <input type="email"  onChange={(e)=>setEmail(e.target.value)} value={email} placeholder="Email"/>
-      <br/>
-      <input type="number"  onChange={(e)=>setPhone(e.target.value)} value={phone} placeholder="Phone"/>
-      <br/>
-      <input type="password"  onChange={(e)=>setPassword(e.target.value)} value={password} placeholder="Password"/>
-      <br/>
-      <input type="password"  onChange={(e)=>setConfirmPassword(e.target.value)} value={Confirmpassword} placeholder="Confirm Password"/>
-      <br/>
-      <input type="submit" value="Create"/>
-      
-    <Button variant="contained" color="success" onClick={backtohomepage} startIcon={<HomeSharpIcon/>} >Back to Homepage</Button>
-    </form>
+
+    <div className='signup_container'>
+    <div className='signup_form_container'>
+      <div className='right'>
+        <h1>New One!</h1>
+      </div>
+      <div className='left'>
+        <form className='form_container' onSubmit={registerUser}>
+          <h1 style={{color:'#333'}}>Create User</h1>
+          {error && <Errormessage>{error}</Errormessage>}
+          {message && <Errormessage >{message}</Errormessage> }
+          <input
+            type="text"
+            placeholder="Name"
+            name="name"
+            onChange={(e)=>setName(e.target.value)} value={name}
+            className='input'
+          />
+          {errors.name && <p className="error">{errors.name}</p>}
+          <input
+            type="email"
+            placeholder="Email"
+            name="email"
+            onChange={(e)=>setEmail(e.target.value)} value={email}
+            className='input'
+          />
+          {errors.email && <p className="error">{errors.email}</p>}
+          <input type="number" name="phone"  onChange={(e)=>setPhone(e.target.value)} value={phone} placeholder="Phone" className='input'/>
+          {errors.phone && <p className="error">{errors.phone}</p>}
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            onChange={(e)=>setPassword(e.target.value)} value={password}
+            className='input'
+          />
+          {errors.password && <p className="error">{errors.password}</p>}
+          <input type="password"  onChange={(e)=>setConfirmPassword(e.target.value)} value={Confirmpassword} placeholder="Confirm Password" name="Confirmpassword" className='input'/>
+          <button type="submit" className='green_btn'>
+            Create
+          </button>
+          <Button variant="contained" color="primary" onClick={backtohomepage} startIcon={<HomeSharpIcon/>} >Back to Homepage</Button>
+        </form>
+      </div>
+    </div>
     </div>
   )
 }
